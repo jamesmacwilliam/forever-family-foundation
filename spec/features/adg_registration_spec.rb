@@ -10,6 +10,19 @@ describe 'ADG registration' do
     @user = FactoryGirl.create(:user)
   end
 
+  it 'Answers ADG question by clicking the label of a radio button' do
+    sign_in(@user)
+    within '#site_nav' do
+      click_link 'Afterlife Discussion Groups'
+    end
+    click_link 'Register'
+    find('label.radio[for="adg_registration_radio_val[1]_yes"]').click
+    find('label.radio[for="adg_registration_radio_val[2]_no"]').click
+    #text area
+    page.should have_selector '#adg_registration_answer_1', visible: true
+    page.should_not have_selector '#adg_registration_answer_2', visible: true
+  end
+
   it 'Answer ADG questions' do
     sign_in(@user)
     within '#site_nav' do
